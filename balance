@@ -1,0 +1,42 @@
+import pandas as pd
+
+def collect_user_input():
+    activities = {
+        'Work': int(input("Enter hours per week for Work: ")),
+        'Family Time': int(input("Enter hours per week for Family Time: ")),
+        'Hobbies': int(input("Enter hours per week for Hobbies: ")),
+        'Recreation': int(input("Enter hours per week for Recreation: ")),
+        'Sports': int(input("Enter hours per week for Sports: ")),
+        'Personal Care': int(input("Enter hours per week for Facial and Body Care: ")),
+        'Nutrition': int(input("Enter hours per week for Proper Nutrition: "))
+    }
+    return activities
+
+def distribute_hours(activities):
+    days_of_week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    weekly_schedule = {day: [] for day in days_of_week}
+    
+    for activity, hours in activities.items():
+        daily_hours = hours / 7
+        for day in days_of_week:
+            weekly_schedule[day].append((activity, daily_hours))
+    
+    return weekly_schedule
+
+def create_schedule(weekly_schedule):
+    df = pd.DataFrame(weekly_schedule)
+    df.index = ['Work', 'Family Time', 'Hobbies', 'Recreation', 'Sports', 'Personal Care', 'Nutrition']
+    return df
+
+def display_schedule(schedule):
+    print("Optimal Weekly Schedule:")
+    print(schedule)
+
+def main():
+    activities = collect_user_input()
+    weekly_schedule = distribute_hours(activities)
+    schedule = create_schedule(weekly_schedule)
+    display_schedule(schedule)
+
+if __name__ == "__main__":
+    main()
